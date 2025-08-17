@@ -62,50 +62,48 @@
     <!-- Menu Desktop -->
     <nav class="hidden md:flex items-center justify-between gap-6 text-sm font-semibold text-white">
       <ul class="flex items-center gap-6">
-        <li><a href="index.html" class="hover:text-indigo-300 transition">Accueil</a></li>
-        <li><a href="catalogue.html" class="hover:text-indigo-300 transition">Catalogue</a></li>
-        <li><a href="stations.html" class="hover:text-indigo-300 transition">Stations Essence</a></li>
-        <li><a href="avis.html" class="hover:text-indigo-300 transition">Avis Clients</a></li>
-        <li><a href="equipe.html" class="hover:text-indigo-300 transition">Notre Équipe</a></li>
-        <li><a href="actualites.html" class="hover:text-indigo-300 transition">Actualités</a></li>
-        <li><a href="contact.html" class="hover:text-indigo-300 transition">Contact</a></li>
+        <li><a href="index.html" class="hover:text-indigo-300 transition">🏠 Accueil</a></li>
+        <li><a href="catalogue.html" class="hover:text-indigo-300 transition">📖 Catalogue</a></li>
+        <li><a href="stations.html" class="hover:text-indigo-300 transition">⛽ Stations Essence</a></li>
+        <li><a href="avis.html" class="hover:text-indigo-300 transition">⭐ Avis Clients</a></li>
+        <li><a href="equipe.html" class="hover:text-indigo-300 transition">👥 Notre Équipe</a></li>
+        <li><a href="actualites.html" class="hover:text-indigo-300 transition">📰 Actualités</a></li>
+        <li><a href="contact.html" class="hover:text-indigo-300 transition">📩 Contact</a></li>
       </ul>
 
       <!-- Bouton Intranet -->
       <a href="candidature.html"
          class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 text-white font-semibold text-sm py-2 px-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out whitespace-nowrap ml-6">
-        Poster sa candidature
+        📝 Poster sa candidature
       </a>
     </nav>
 
-    <!-- Hamburger mobile -->
-    <button id="burger" class="md:hidden focus:outline-none">
-      <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-        stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-  </nav>
+<!-- Hamburger mobile -->
+<button id="burger" class="md:hidden focus:outline-none relative z-50">
+  <svg class="w-9 h-9 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2"
+       viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+</button>
+</nav>
 
-  <!-- Menu Mobile -->
-  <div id="mobileMenu" class="hidden md:hidden px-6 py-4 bg-indigo-900/90 border-t border-indigo-700 shadow-sm">
-    <ul class="flex flex-col gap-3 text-sm font-semibold text-indigo-300">
-      <li><a href="index.html" class="block hover:text-indigo-400">Accueil</a></li>
-      <li><a href="catalogue.html" class="block hover:text-indigo-400">Catalogue</a></li>
-      <li><a href="stations.html" class="block hover:text-indigo-400">Stations Essence</a></li>
-      <li><a href="avis.html" class="block hover:text-indigo-400">Avis Clients</a></li>
-      <li><a href="equipe.html" class="block hover:text-indigo-400">Notre Équipe</a></li>
-      <li><a href="actualites.html" class="block hover:text-indigo-400">Actualités</a></li>
-      <li><a href="contact.html" class="block hover:text-indigo-400">Contact</a></li>
-      <li><a href="candidature.html" class="block hover:text-indigo-400">Poster sa candidature</a></li>
-    </ul>
-  </div>
-</header>
+<!-- Menu Mobile -->
+<div id="mobileMenu" class="hidden md:hidden px-6 py-6 mt-4 mx-4 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 text-white">
+  <ul class="flex flex-col gap-4 text-lg font-semibold text-center">
+    <li><a href="index.html" class="block py-2 hover:text-indigo-300 transition">🏠 Accueil</a></li>
+    <li><a href="catalogue.html" class="block py-2 hover:text-indigo-300 transition">📖 Catalogue</a></li>
+    <li><a href="stations.html" class="block py-2 hover:text-indigo-300 transition">⛽ Stations Essence</a></li>
+    <li><a href="avis.html" class="block py-2 hover:text-indigo-300 transition">⭐ Avis Clients</a></li>
+    <li><a href="equipe.html" class="block py-2 hover:text-indigo-300 transition">👥 Notre Équipe</a></li>
+    <li><a href="actualites.html" class="block py-2 hover:text-indigo-300 transition">📰 Actualités</a></li>
+    <li><a href="contact.html" class="block py-2 hover:text-indigo-300 transition">📩 Contact</a></li>
+    <li><a href="candidature.html" class="block py-2 hover:text-indigo-300 transition">📝 Candidature</a></li>
+  </ul>
+</div>
 
 <script>
-  // Toggle menu mobile
   const burger = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobileMenu');
 
@@ -123,6 +121,7 @@
     }
   });
 </script>
+
 
 </html>
 
