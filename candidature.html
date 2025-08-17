@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LTD Grove Street</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    /* Underline animé */
+    nav a {
+      position: relative;
+      color: white; /* texte blanc */
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -4px;
+      background-color: #4f46e5;
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    nav a:hover::after, nav a.active::after {
+      width: 100%;
+    }
+    nav a:hover {
+      color: #4338ca; /* indigo-700 */
+    }
+
+    /* Ombre + fond sombre au scroll */
+    .nav-shadow {
+      box-shadow: 0 2px 10px rgb(0 0 0 / 0.2);
+      backdrop-filter: saturate(180%) blur(10px);
+      background-color: rgba(17, 24, 39, 0.95); /* gris très foncé/indigo */
+      transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 shadow-md transition-colors duration-300">
+
+<header id="header" 
+  class="fixed top-0 left-0 w-full z-50 
+         bg-gradient-to-r from-gray-900/80 via-indigo-900/80 to-gray-900/80 
+         shadow-md transition-colors duration-300">
+  <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 md:px-12 font-sans">
+    <!-- Logo + Nom -->
+    <a href="#" class="flex items-center gap-3">
+      <img src="https://i.goopics.net/5dh7x3.png" alt="Logo LTD Grove Street" class="w-10 h-10 rounded shadow-md" />
+      <span class="text-indigo-400 text-2xl font-extrabold tracking-tight hover:text-indigo-300 transition duration-300">
+        LTD Grove Street
+      </span>
+    </a>
+
+    <!-- Menu Desktop -->
+    <nav class="hidden md:flex items-center justify-between gap-6 text-sm font-semibold text-white">
+      <ul class="flex items-center gap-6">
+        <li><a href="index.html" class="hover:text-indigo-300 transition">Accueil</a></li>
+        <li><a href="catalogue.html" class="hover:text-indigo-300 transition">Catalogue</a></li>
+        <li><a href="stations.html" class="hover:text-indigo-300 transition">Stations Essence</a></li>
+        <li><a href="avis.html" class="hover:text-indigo-300 transition">Avis Clients</a></li>
+        <li><a href="equipe.html" class="hover:text-indigo-300 transition">Notre Équipe</a></li>
+        <li><a href="actualites.html" class="hover:text-indigo-300 transition">Actualités</a></li>
+        <li><a href="contact.html" class="hover:text-indigo-300 transition">Contact</a></li>
+      </ul>
+      <!-- Bouton Intranet -->
+      <a href="candidature.html"
+         class="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-purple-600 hover:to-indigo-500 text-white font-semibold text-sm py-2 px-4 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 ease-in-out whitespace-nowrap ml-6">
+        Poster sa candidature
+      </a>
+    </nav>
+
+    <!-- Hamburger mobile -->
+    <button id="burger" class="md:hidden focus:outline-none">
+      <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Menu Mobile -->
+  <div id="mobileMenu" class="hidden md:hidden px-6 py-4 bg-indigo-900/90 border-t border-indigo-700 shadow-sm">
+    <ul class="flex flex-col gap-3 text-sm font-semibold text-indigo-300">
+      <li><a href="index.html" class="block hover:text-indigo-400">Accueil</a></li>
+      <li><a href="catalogue.html" class="block hover:text-indigo-400">Catalogue</a></li>
+      <li><a href="stations.html" class="block hover:text-indigo-400">Stations Essence</a></li>
+      <li><a href="avis.html" class="block hover:text-indigo-400">Avis Clients</a></li>
+      <li><a href="equipe.html" class="block hover:text-indigo-400">Notre Équipe</a></li>
+      <li><a href="actualites.html" class="block hover:text-indigo-400">Actualités</a></li>
+      <li><a href="contact.html" class="block hover:text-indigo-400">Contact</a></li>
+      <li><a href="candidature.html" class="block hover:text-indigo-400">Poster sa candidature</a></li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  // Toggle menu mobile
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  burger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  // Ombre barre au scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header.classList.add('nav-shadow');
+    } else {
+      header.classList.remove('nav-shadow');
+    }
+  });
+</script>
+</html>
+
+<!-- Statut Recrutement -->
+<section class="max-w-4xl mx-auto px-8 py-6 mt-32 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 text-white text-center">
+  <p class="text-lg font-semibold">
+    🔴 Recrutement Fermé ! 
+    <span class="font-normal">- Aucune candidature reçue ne sera traitée.</span>
+  </p>
+</section>
+
+<!-- Formulaire de candidature -->
+<section class="max-w-4xl mx-auto px-8 py-16 mt-12 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-2xl shadow-2xl backdrop-blur-md border border-white/20">
+  <h2 class="text-4xl font-extrabold text-center mb-12 text-white tracking-tight">
+    Postez votre  
+    <span class="bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+      candidature !
+    </span> 
+  </h2>
+
+<form class="space-y-8" id="appointmentForm" method="POST" novalidate>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <input
+      type="text"
+      name="Nom"
+      placeholder="Nom complet"
+      required
+      class="p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+    <input
+      type="text"
+      name="Numéro de Téléphone"
+      placeholder="Numéro de Téléphone"
+      required
+      class="p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <input
+      type="text"
+      name="Date"
+      placeholder="Date de naissance"
+      required
+      class="p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+    <input
+      type="text"
+      name="Vos Disponibilités"
+      placeholder="Vos Disponibilités"
+      required
+      class="p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+  </div>
+
+<div class="grid grid-cols-1 md:grid-cols-1 gap-6">
+  <div class="relative w-full">
+    <select
+      name="Poste"
+      required
+      class="appearance-none w-full p-4 rounded-lg bg-white/10 border border-white/20 text-white text-center focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-10 cursor-pointer shadow-md hover:bg-white/20 transition"
+    >
+      <option value="" disabled selected class="bg-gray-900 text-gray-400">👤 Poste souhaité</option>
+      <option value="🛒 Vendeur" class="bg-gray-900 text-white">🛒 Vendeur</option>
+      <option value="⛽ Pompiste" class="bg-gray-900 text-white">⛽ Pompiste</option>
+      <option value="📦 Exportateur" class="bg-gray-900 text-white">📦 Exportateur</option>
+    </select>
+    <!-- Icône flèche -->
+    <svg class="w-5 h-5 text-gray-400 absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+</div>
+
+  <textarea
+    name="Votre Présentation"
+    rows="5"
+    placeholder="Présentez-vous : parlez-nous de qui vous êtes, de ce que vous aimez faire dans la vie etc..."
+    class="w-full p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+  ></textarea>
+
+  <textarea
+    name="Vos Motivations"
+    rows="5"
+    placeholder="Vos Motivations : expliquez-nous ce qui vous motive à rejoindre le LTD Grove Street"
+    class="w-full p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+  ></textarea>
+
+  <textarea
+    name="Commentaire"
+    rows="3"
+    placeholder="Commentaire : Partagez toute information complémentaire que vous jugez utile. (Facultatif)"
+    class="w-full p-4 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+  ></textarea>
+
+  <button
+    type="submit"
+    class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 rounded-lg font-semibold text-white transition shadow-lg"
+  >
+    Envoyer sa candidature
+  </button>
+</form>
+
+<script>
+  const form = document.getElementById('appointmentForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const Nom = formData.get('Nom') || "Non spécifié";
+    const Tel = formData.get('Numéro de Téléphone') || "Non spécifié";
+    const DateNaissance = formData.get('Date') || "Non spécifiée";
+    const Disponibilites = formData.get('Vos Disponibilités') || "Non spécifiées";
+    const Poste = formData.get('Poste') || "Non spécifié";
+    const Presentation = formData.get('Votre Présentation') || "Non spécifiée";
+    const Motivations = formData.get('Vos Motivations') || "Non spécifiées";
+    const Commentaire = formData.get('Commentaire') || "Aucun";
+
+    if (!Nom || !Tel || !DateNaissance || !Disponibilites || !Poste) {
+      alert("Merci de remplir tous les champs obligatoires.");
+      return;
+    }
+
+    // Construire la description en liste markdown
+    const description = `
+Nom complet :  
+${Nom}
+
+Téléphone : 
+${Tel}
+
+Date de naissance :  
+${DateNaissance}
+
+Disponibilités : 
+${Disponibilites}
+
+Poste souhaité :
+${Poste}
+
+Présentation :
+${Presentation}
+
+Motivations :
+${Motivations}
+
+Commentaire :
+${Commentaire}
+`;
+
+const payload = {
+  content: "<@X>",
+  embeds: [
+    {
+      title: "Nouvelle candidature LTD Grove Street",
+      color: 0x1ABC9C,
+      description: description,
+      footer: {
+        text: "Candidature envoyée via le site LTD Grove Street"
+      },
+      timestamp: new Date().toISOString()
+    }
+  ]
+};
+
+    const webhookUrl = "https://discord.com/api/webhooks/1404696865030672484/8NGXojmjpJnBGP_VLOKdscSE3l5KEW8TQMqlieQQ3ZusPWUiMuWmbatb8WhlhlDY01JM";
+
+    try {
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error("Erreur lors de l'envoi au webhook Discord.");
+
+      alert("Candidature envoyée avec succès !");
+      form.reset();
+    } catch (error) {
+      console.error(error);
+      alert("Une erreur est survenue lors de l'envoi de la candidature.");
+    }
+  });
+</script>
