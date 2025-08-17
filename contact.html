@@ -136,6 +136,11 @@
     avec la Direction
   </h2>
 
+  <!-- Message de confirmation (caché au départ) -->
+  <div id="successMessage" class="hidden text-center text-green-400 font-semibold mb-6">
+    ✅ Votre demande a bien été transmise ! Nous vous contacterons rapidement.
+  </div>
+
   <form class="space-y-6" id="appointmentForm" method="POST" novalidate>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <input
@@ -187,10 +192,25 @@
 </section>
 
 <script>
-  // Optionnel : limiter la date minimum à aujourd'hui
-  const dateInput = document.getElementById('dateInput');
-  const today = new Date().toISOString().split('T')[0];
-  dateInput.setAttribute('min', today);
+  const form = document.getElementById("appointmentForm");
+  const successMessage = document.getElementById("successMessage");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); // Empêche le rechargement de la page
+
+    // Ici tu pourrais envoyer les données vers ton serveur avec fetch()
+
+    // Affiche le message de succès
+    successMessage.classList.remove("hidden");
+
+    // Vide le formulaire
+    form.reset();
+
+    // Cache le message après 5 secondes (optionnel)
+    setTimeout(() => {
+      successMessage.classList.add("hidden");
+    }, 5000);
+  });
 </script>
 
  <!-- Pied de page -->
