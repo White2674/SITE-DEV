@@ -274,14 +274,12 @@
 
       messageEl.textContent = "✅ Demande envoyée avec succès !";
       messageEl.className = "text-center mt-4 text-sm font-medium text-green-500";
-      messageEl.classList.remove("hidden");
 
       form.reset();
     } catch (error) {
       console.error(error);
       messageEl.textContent = "❌ Une erreur est survenue lors de l'envoi de la demande.";
       messageEl.className = "text-center mt-4 text-sm font-medium text-red-500";
-      messageEl.classList.remove("hidden");
     }
   });
 </script>
