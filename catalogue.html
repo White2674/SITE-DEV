@@ -286,7 +286,34 @@
   </button>
 </div>
 
+<!-- Script à placer ici, juste avant </body> -->
 <script>
+function validateOrder() {
+  const name = document.getElementById('customerName').value.trim();
+  const phone = document.getElementById('customerPhone').value.trim();
+  const deliveryTime = document.getElementById('deliveryTime').value.trim();
+
+  if (!name || !phone || !deliveryTime) {
+    alert("Veuillez remplir tous les champs obligatoires !");
+    return;
+  }
+
+  alert("✅ Commande envoyée avec succès !");
+
+  cart = [];
+  renderCart();
+
+  document.getElementById('customerName').value = '';
+  document.getElementById('customerPhone').value = '';
+  document.getElementById('deliveryTime').value = '';
+  document.getElementById('comments').value = '';
+}
+</script>
+</body>
+</html>
+
+<script>
+
 /* === Catalogue + Panier (robuste) === */
 
 (function () {
