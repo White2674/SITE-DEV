@@ -565,8 +565,8 @@ function validateOrder() {
   const comment = document.getElementById('comments').value.trim();
   const fraisLivraison = 250; // frais fixes
 
-  if (!name || !phone) {
-    alert("Merci de remplir au minimum votre nom et téléphone.");
+  if (!name || !phone || !time) {
+    alert("Merci de remplir tous les champs obligatoires (Nom, Téléphone et Heure).");
     return;
   }
 
@@ -610,16 +610,27 @@ function validateOrder() {
   })
   .then(res => {
     if (res.ok) {
-      alert("Commande envoyée avec succès !");
+      alert("✅ Commande envoyée avec succès !");
+      
+      // 🔹 Vide le panier
       cart = [];
       renderCart();
+
+      // 🔹 Vide les champs du formulaire
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('deliveryTime').value = '';
+      document.getElementById('comments').value = '';
+
+      // 🔹 Ferme le panier après envoi
+      toggleCart();
     } else {
-      alert("Erreur lors de l'envoi de la commande.");
+      alert("⚠️ Erreur lors de l'envoi de la commande.");
     }
   })
   .catch(err => {
     console.error(err);
-    alert("Impossible de contacter le serveur Discord.");
+    alert("❌ Impossible de contacter le serveur Discord.");
   });
 }
 </script>
