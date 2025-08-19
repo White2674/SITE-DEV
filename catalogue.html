@@ -590,6 +590,7 @@ function validateOrder() {
     embeds: [{
       title: "🛒 Nouvelle commande reçue",
       color: 0x4CAF50,
+      thumbnail: { url: "https://i.goopics.net/5dh7x3.png" },
       fields: [
         { name: "👤 Nom & Prénom", value: name },
         { name: "📲 Téléphone", value: phone },
@@ -600,11 +601,12 @@ function validateOrder() {
         { name: "🚚 Frais de livraison", value: fraisLivraison.toFixed(2) + " $" },
         { name: "💰 Total commande", value: grandTotal.toFixed(2) + " $" }
       ],
+      footer: { text: "Demande envoyée via le site LTD", icon_url: "https://i.goopics.net/5dh7x3.png" },
       timestamp: new Date().toISOString()
     }]
   };
 
-  const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK";
+  const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK"; // <-- mets ton webhook ici
 
   fetch(webhookURL, {
     method: "POST",
