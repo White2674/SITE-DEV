@@ -627,15 +627,16 @@ function validateOrder() {
       document.getElementById('deliveryTime').value = '';
       document.getElementById('comments').value = '';
 
-      // 🔹 Ferme le panier après envoi
-      toggleCart();
-    } else {
-      alert("⚠️ Erreur lors de l'envoi de la commande.");
-    }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("❌ Impossible de contacter le serveur Discord.");
-  });
-}
+    // Afficher le message de succès
+    successMessage.classList.remove('hidden');
+
+    // Cacher le message après 5 secondes
+    setTimeout(() => successMessage.classList.add('hidden'), 5000);
+
+    form.reset();
+  } catch (error) {
+    console.error(error);
+    alert("Une erreur est survenue lors de l'envoi de la candidature.");
+  }
+});
 </script>
