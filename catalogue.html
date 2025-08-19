@@ -281,15 +281,17 @@
       class="w-full p-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
     ></textarea>
 
-<p id="successMessage" class="mt-4 text-center text-green-500 font-semibold hidden">
+<button 
+  class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition" 
+  onclick="validateOrder()">
+  ✅ Valider la commande
+</button>
+
+<!-- Message de succès, caché par défaut -->
+<p id="successMessage" class="mt-3 text-center text-green-500 font-semibold hidden">
   ✅ Commande envoyée avec succès !
 </p>
 
-  </div>
-  <button class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition" onclick="validateOrder()">
-    ✅ Valider la commande
-  </button>
-</div>
 
 <!-- Script à placer ici, juste avant </body> -->
 <script>
@@ -569,7 +571,7 @@ function validateOrder() {
   const time = document.getElementById('deliveryTime').value.trim();
   const comment = document.getElementById('comments').value.trim();
   const successMessage = document.getElementById('successMessage');
-  const fraisLivraison = 250; // frais fixes
+  const fraisLivraison = 250;
 
   if (!name || !phone || !time) {
     alert("Merci de remplir tous les champs obligatoires (Nom, Téléphone et Heure).");
@@ -588,23 +590,21 @@ function validateOrder() {
     embeds: [{
       title: "🛒 Nouvelle commande reçue",
       color: 0x4CAF50,
-      thumbnail: { url: "https://i.goopics.net/5dh7x3.png" },
       fields: [
-        { name: "👤 Nom & Prénom", value: name, inline: false },
-        { name: "📲 Téléphone", value: phone, inline: false },
-        { name: "⏰ Heure de livraison", value: time || "Non précisée", inline: false },
-        { name: "📩 Commentaire", value: comment || "Aucun", inline: false },
-        { name: "🛒 Articles", value: orderDetails || "Aucun article", inline: false },
-        { name: "💵 Total articles", value: totalArticles.toFixed(2) + " $", inline: false },
-        { name: "🚚 Frais de livraison", value: fraisLivraison.toFixed(2) + " $", inline: false },
-        { name: "💰 Total commande", value: grandTotal.toFixed(2) + " $", inline: false }
+        { name: "👤 Nom & Prénom", value: name },
+        { name: "📲 Téléphone", value: phone },
+        { name: "⏰ Heure de livraison", value: time },
+        { name: "📩 Commentaire", value: comment || "Aucun" },
+        { name: "🛒 Articles", value: orderDetails || "Aucun article" },
+        { name: "💵 Total articles", value: totalArticles.toFixed(2) + " $" },
+        { name: "🚚 Frais de livraison", value: fraisLivraison.toFixed(2) + " $" },
+        { name: "💰 Total commande", value: grandTotal.toFixed(2) + " $" }
       ],
-      footer: { text: "Demande envoyée via le site LTD", icon_url: "https://i.goopics.net/5dh7x3.png" },
       timestamp: new Date().toISOString()
     }]
   };
 
-  const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK";
+  const webhookURL = "TON_WEBHOOK_DISCORD_ICI";
 
   fetch(webhookURL, {
     method: "POST",
@@ -613,7 +613,7 @@ function validateOrder() {
   })
   .then(res => {
     if (res.ok) {
-      // Vide panier et formulaire
+      // Vider panier et formulaire
       cart = [];
       renderCart();
       document.getElementById('customerName').value = '';
@@ -621,7 +621,7 @@ function validateOrder() {
       document.getElementById('deliveryTime').value = '';
       document.getElementById('comments').value = '';
 
-      // Message de succès
+      // Afficher message succès
       successMessage.classList.remove('hidden');
       setTimeout(() => successMessage.classList.add('hidden'), 5000);
     } else {
