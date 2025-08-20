@@ -565,75 +565,83 @@ function validateOrder() {
 </script>
 
 <script>
-async function validateOrder(e) {
-  e?.preventDefault();
+function validateOrder(e) {
+  e?.preventDefault(); // au cas où c'est déclenché par un <form>
 
   const name = document.getElementById('customerName').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
   const time = document.getElementById('deliveryTime').value.trim();
   const comment = document.getElementById('comments').value.trim();
-  const fraisLivraison = 250;
 
   if (!name || !phone || !time) {
     alert("Merci de remplir tous les champs obligatoires (Nom, Téléphone et Heure).");
     return;
   }
 
+  // Calcul des totaux
   const totalArticles = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const grandTotal = totalArticles + fraisLivraison;
 
-  let orderDetails = cart.map(item => 
-    `• ${item.name} x${item.quantity} — ${item.price.toFixed(2)} $`
-  ).join("\n");
+  // Générer la liste des articles
+  let orderDetails = "";
+  cart.forEach(item => {
+    orderDetails += `• ${item.name} x${item.quantity} — ${item.price.toFixed(2)} $\n`;
+  });
 
+  // Message Discord
   const message = {
     embeds: [{
       title: "🛒 Nouvelle commande reçue",
       color: 0x4CAF50,
+      thumbnail: { url: "https://i.goopics.net/5dh7x3.png" },
       fields: [
-        { name: "👤 Nom & Prénom", value: name || "Non spécifié" },
-        { name: "📲 Téléphone", value: phone || "Non spécifié" },
-        { name: "⏰ Heure de livraison", value: time || "Non spécifiée" },
+        { name: "👤 Nom & Prénom", value: name },
+        { name: "📲 Téléphone", value: phone },
+        { name: "⏰ Heure de livraison", value: time },
         { name: "📩 Commentaire", value: comment || "Aucun" },
         { name: "🛒 Articles", value: orderDetails || "Aucun article" },
         { name: "💵 Total articles", value: totalArticles.toFixed(2) + " $" },
         { name: "🚚 Frais de livraison", value: fraisLivraison.toFixed(2) + " $" },
         { name: "💰 Total commande", value: grandTotal.toFixed(2) + " $" }
       ],
-      footer: { text: "Commande envoyée via LTD Grove Street" },
+      footer: { text: "Demande envoyée via le site LTD", icon_url: "https://i.goopics.net/5dh7x3.png" },
       timestamp: new Date().toISOString()
     }]
   };
 
   const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK";
 
-  try {
-    const res = await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(message)
-    });
+  fetch(webhookURL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(message)
+  })
+  .then(res => {
+    if (res.ok) {
+      // ✅ Vider panier
+      cart = [];
+      document.getElementById("cartItems").innerHTML = "<p>🛒 Votre panier est vide</p>";
+      document.getElementById("cartTotal").textContent = "0.00 $";
 
-    const data = await res.text(); // 🔎 voir la réponse brute
-    console.log("Réponse Discord:", data);
+      // ✅ Vider formulaire
+      document.getElementById('customerName').value = '';
+      document.getElementById('customerPhone').value = '';
+      document.getElementById('deliveryTime').value = '';
+      document.getElementById('comments').value = '';
 
-    if (!res.ok) {
-      throw new Error(data);
+      // ✅ Fermer le panier
+      document.getElementById('cartPanel').classList.add('translate-x-full');
+      document.getElementById('cartModal').classList.add('hidden');
+
+      // ✅ Message succès
+      alert("✅ Commande envoyée avec succès !");
+    } else {
+      alert("⚠️ Erreur lors de l'envoi de la commande !");
     }
-
-    // ✅ Succès → reset
-    cart = [];
-    renderCart();
-    document.getElementById('customerName').value = '';
-    document.getElementById('customerPhone').value = '';
-    document.getElementById('deliveryTime').value = '';
-    document.getElementById('comments').value = '';
-    toggleCart();
-
-    alert("✅ Commande envoyée avec succès !");
-  } catch (err) {
-    console.error("Erreur:", err);
-    alert("❌ Erreur : " + err.message);
-  }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("⚠️ Une erreur est survenue.");
+  });
 }
 </script>
