@@ -574,7 +574,7 @@ function validateOrder() {
   const fraisLivraison = 250;
 
   if (!name || !phone || !time) {
-    alert("Merci de remplir tous les champs obligatoires (Nom, Téléphone et Heure).");
+    alert("Veuillez remplir tous les champs obligatoires !");
     return;
   }
 
@@ -606,7 +606,7 @@ function validateOrder() {
     }]
   };
 
-  const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK"; // <-- mets ton webhook ici
+  const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK";
 
   fetch(webhookURL, {
     method: "POST",
@@ -615,15 +615,21 @@ function validateOrder() {
   })
   .then(res => {
     if (res.ok) {
-      // Vider panier et formulaire
+      // 1️⃣ Vider panier
       cart = [];
       renderCart();
+
+      // 2️⃣ Vider formulaire
       document.getElementById('customerName').value = '';
       document.getElementById('customerPhone').value = '';
       document.getElementById('deliveryTime').value = '';
       document.getElementById('comments').value = '';
 
-      // Afficher message succès
+      // 3️⃣ Fermer le panier
+      document.getElementById('cartPanel').classList.add('translate-x-full');
+      document.getElementById('cartModal').classList.add('hidden');
+
+      // 4️⃣ Afficher le message succès
       successMessage.classList.remove('hidden');
       setTimeout(() => successMessage.classList.add('hidden'), 5000);
     } else {
