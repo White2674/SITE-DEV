@@ -565,16 +565,17 @@ function validateOrder() {
 </script>
 
 <script>
-function validateOrder() {
+function validateOrder(e) {
+  e?.preventDefault(); // utile si déclenché par un <form>
+
   const name = document.getElementById('customerName').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
   const time = document.getElementById('deliveryTime').value.trim();
   const comment = document.getElementById('comments').value.trim();
-  const successMessage = document.getElementById('successMessage');
   const fraisLivraison = 250;
 
   if (!name || !phone || !time) {
-    alert("Veuillez remplir tous les champs obligatoires !");
+    alert("Merci de remplir tous les champs obligatoires (Nom, Téléphone et Heure).");
     return;
   }
 
@@ -586,6 +587,7 @@ function validateOrder() {
     orderDetails += `• ${item.name} x${item.quantity} — ${item.price.toFixed(2)} $\n`;
   });
 
+  // === Message pour Discord ===
   const message = {
     embeds: [{
       title: "🛒 Nouvelle commande reçue",
@@ -601,7 +603,7 @@ function validateOrder() {
         { name: "🚚 Frais de livraison", value: fraisLivraison.toFixed(2) + " $" },
         { name: "💰 Total commande", value: grandTotal.toFixed(2) + " $" }
       ],
-      footer: { text: "Demande envoyée via le site LTD", icon_url: "https://i.goopics.net/5dh7x3.png" },
+      footer: { text: "Commande envoyée via LTD Grove Street" },
       timestamp: new Date().toISOString()
     }]
   };
@@ -615,30 +617,28 @@ function validateOrder() {
   })
   .then(res => {
     if (res.ok) {
-      // 1️⃣ Vider panier
+      // ✅ Vider le panier
       cart = [];
       renderCart();
 
-      // 2️⃣ Vider formulaire
+      // ✅ Vider les champs du formulaire
       document.getElementById('customerName').value = '';
       document.getElementById('customerPhone').value = '';
       document.getElementById('deliveryTime').value = '';
       document.getElementById('comments').value = '';
 
-      // 3️⃣ Fermer le panier
-      document.getElementById('cartPanel').classList.add('translate-x-full');
-      document.getElementById('cartModal').classList.add('hidden');
+      // ✅ Fermer le panier
+      toggleCart();
 
-      // 4️⃣ Afficher le message succès
-      successMessage.classList.remove('hidden');
-      setTimeout(() => successMessage.classList.add('hidden'), 5000);
+      // ✅ Message succès
+      alert("✅ Commande envoyée avec succès !");
     } else {
       alert("⚠️ Erreur lors de l'envoi de la commande !");
     }
   })
   .catch(err => {
     console.error(err);
-    alert("⚠️ Une erreur est survenue.");
+    alert("❌ Une erreur est survenue.");
   });
 }
 </script>
