@@ -565,8 +565,8 @@ function validateOrder() {
 </script>
 
 <script>
-function validateOrder(e) {
-  e?.preventDefault(); // utile si déclenché par un <form>
+async function validateOrder(e) {
+  e?.preventDefault();
 
   const name = document.getElementById('customerName').value.trim();
   const phone = document.getElementById('customerPhone').value.trim();
@@ -582,21 +582,18 @@ function validateOrder(e) {
   const totalArticles = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const grandTotal = totalArticles + fraisLivraison;
 
-  let orderDetails = "";
-  cart.forEach(item => {
-    orderDetails += `• ${item.name} x${item.quantity} — ${item.price.toFixed(2)} $\n`;
-  });
+  let orderDetails = cart.map(item => 
+    `• ${item.name} x${item.quantity} — ${item.price.toFixed(2)} $`
+  ).join("\n");
 
-  // === Message pour Discord ===
   const message = {
     embeds: [{
       title: "🛒 Nouvelle commande reçue",
       color: 0x4CAF50,
-      thumbnail: { url: "https://i.goopics.net/5dh7x3.png" },
       fields: [
-        { name: "👤 Nom & Prénom", value: name },
-        { name: "📲 Téléphone", value: phone },
-        { name: "⏰ Heure de livraison", value: time },
+        { name: "👤 Nom & Prénom", value: name || "Non spécifié" },
+        { name: "📲 Téléphone", value: phone || "Non spécifié" },
+        { name: "⏰ Heure de livraison", value: time || "Non spécifiée" },
         { name: "📩 Commentaire", value: comment || "Aucun" },
         { name: "🛒 Articles", value: orderDetails || "Aucun article" },
         { name: "💵 Total articles", value: totalArticles.toFixed(2) + " $" },
@@ -610,35 +607,33 @@ function validateOrder(e) {
 
   const webhookURL = "https://discord.com/api/webhooks/1405047503077773403/NS2kpJTnJQbpaKEEJ577XfwtU7at6tjec3X_kXfK7G2dCP1oJgzTT4wdcauaFlEWE4MK";
 
-  fetch(webhookURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(message)
-  })
-  .then(res => {
-    if (res.ok) {
-      // ✅ Vider le panier
-      cart = [];
-      renderCart();
+  try {
+    const res = await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(message)
+    });
 
-      // ✅ Vider les champs du formulaire
-      document.getElementById('customerName').value = '';
-      document.getElementById('customerPhone').value = '';
-      document.getElementById('deliveryTime').value = '';
-      document.getElementById('comments').value = '';
+    const data = await res.text(); // 🔎 voir la réponse brute
+    console.log("Réponse Discord:", data);
 
-      // ✅ Fermer le panier
-      toggleCart();
-
-      // ✅ Message succès
-      alert("✅ Commande envoyée avec succès !");
-    } else {
-      alert("⚠️ Erreur lors de l'envoi de la commande !");
+    if (!res.ok) {
+      throw new Error(data);
     }
-  })
-  .catch(err => {
-    console.error(err);
-    alert("❌ Une erreur est survenue.");
-  });
+
+    // ✅ Succès → reset
+    cart = [];
+    renderCart();
+    document.getElementById('customerName').value = '';
+    document.getElementById('customerPhone').value = '';
+    document.getElementById('deliveryTime').value = '';
+    document.getElementById('comments').value = '';
+    toggleCart();
+
+    alert("✅ Commande envoyée avec succès !");
+  } catch (err) {
+    console.error("Erreur:", err);
+    alert("❌ Erreur : " + err.message);
+  }
 }
 </script>
